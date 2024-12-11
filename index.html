@@ -3,151 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mental Health Awareness</title>
+    <title>Mood Message</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .message-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .message-container p {
+            font-size: 1.2em;
             color: #333;
         }
 
-        header {
-            background-color: #6a82fb;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: #374785;
-            padding: 10px;
-        }
-
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .container {
-            padding: 20px;
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-        }
-
-        h1, h2 {
-            text-align: center;
-            color: #374785;
-        }
-
-        .mood-options {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
-
-        .mood-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 8px;
-            background-color: #c1c8e4;
-            transition: transform 0.3s, background-color 0.3s;
-        }
-
-        .mood-option:hover {
-            transform: scale(1.1);
-            background-color: #a3a8d2;
-        }
-
-        .message {
-            text-align: center;
-            font-size: 1.2em;
-            font-weight: bold;
+        .back-button {
             margin-top: 20px;
-            color: #ff6b6b;
-        }
-
-        footer {
-            text-align: center;
+            padding: 10px 20px;
             background-color: #374785;
             color: white;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #6a82fb;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Mental Health Awareness</h1>
-    </header>
-
-    <nav>
-        <a href="#introduction">Introduction</a>
-        <a href="#mood">Mood Check</a>
-    </nav>
-
-    <section id="introduction" class="container">
-        <h2>Why Mental Health is Important</h2>
-        <p>Mental health is as important as physical health. It impacts how we think, feel, and behave in our daily lives. Taking care of your mental health helps you cope with stress, build relationships, and enjoy life to the fullest.</p>
-        <h2>Understanding Anxiety and Stress</h2>
-        <p>Anxiety and stress are common challenges. They can occur due to work, relationships, or other life events. Recognizing these feelings and learning ways to manage them can improve your overall well-being.</p>
-    </section>
-
-    <section id="mood" class="container">
-        <h2>How Are You Feeling Today?</h2>
-        <div class="mood-options">
-            <div class="mood-option" onclick="showMessage('angry')">
-                <img src="https://via.placeholder.com/100" alt="Angry face">
-                <p>Angry</p>
-            </div>
-            <div class="mood-option" onclick="showMessage('happy')">
-                <img src="https://via.placeholder.com/100" alt="Happy face">
-                <p>Happy</p>
-            </div>
-            <div class="mood-option" onclick="showMessage('sad')">
-                <img src="https://via.placeholder.com/100" alt="Sad face">
-                <p>Sad</p>
-            </div>
-        </div>
-        <div id="message" class="message"></div>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Mental Health Awareness Initiative</p>
-    </footer>
+    <div class="message-container">
+        <h1>Your Mood Message</h1>
+        <p id="moodMessage"></p>
+        <button class="back-button" onclick="window.history.back()">Go Back</button>
+    </div>
 
     <script>
-        function showMessage(mood) {
-            const messageElement = document.getElementById('message');
-            let message;
-
+        function getMoodMessage(mood) {
             if (mood === 'angry') {
-                message = "Take a deep breath. It's okay to feel this way. Remember, you have the strength to handle this!";
+                return "Take a deep breath. It's okay to feel this way. Remember, you have the strength to handle this!";
             } else if (mood === 'happy') {
-                message = "You're doing great! Keep spreading positivity and joy!";
+                return "You're doing great! Keep spreading positivity and joy!";
             } else if (mood === 'sad') {
-                message = "It's okay to feel sad sometimes. Remember, you're not alone, and things will get better.";
+                return "It's okay to feel sad sometimes. Remember, you're not alone, and things will get better.";
             }
-
-            messageElement.textContent = message;
+            return "Mood not recognized.";
         }
+
+        // Get the mood from the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const mood = urlParams.get('mood');
+        const message = getMoodMessage(mood);
+
+        // Set the message in the HTML
+        document.getElementById('moodMessage').textContent = message;
     </script>
 </body>
 </html>
